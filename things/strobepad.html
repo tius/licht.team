@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>StrobePad — licht.team</title>
+	
+	<style>
+		*, *::before, *::after { box-sizing: border-box; }
+
+		body { margin: 0; }
+
+		.layout {
+			display: flex;
+			align-items: flex-start;
+			gap: 1.5rem;
+		}
+
+		.main-area {
+			flex: 1;
+			min-width: 0;
+		}
+
+		/* --- nav --- */
+
+		.top-nav {
+			padding: 0.5rem 1rem;
+			font-family: sans-serif;
+			font-size: 0.9rem;
+			color: #333;
+			background: rgba(128,128,128,0.12);
+			border-bottom: 1px solid rgba(128,128,128,0.2);
+		}
+
+		.top-nav a {
+			display: inline-block;
+			margin-right: 0.25rem;
+			padding: 0.2rem 0.5rem;
+			color: inherit;
+			text-decoration: none;
+			border-radius: 3px;
+		}
+
+		.top-nav a:hover,
+		.top-nav a.active,
+		.top-nav .nav-group.active > .nav-link {
+			background: rgba(128,128,128,0.2);
+		}
+
+		.nav-group {
+			display: inline-block;
+			position: relative;
+			vertical-align: top;
+		}
+
+		.nav-group ul {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			list-style: none;
+			margin: 0;
+			padding: 0.25rem 0;
+			background: white;
+			border: 1px solid rgba(128,128,128,0.25);
+			border-radius: 3px;
+			white-space: nowrap;
+			z-index: 100;
+		}
+
+		.nav-group:hover ul { display: block; }
+
+		.nav-group ul li a { display: block; }
+
+		/* --- sidebar --- */
+
+		.side-nav {
+			width: 16rem;
+			padding: 1rem 0.75rem 0 1rem;
+			font-family: sans-serif;
+			font-size: 0.92rem;
+		}
+
+		.side-nav h2 {
+			margin: 0 0 0.6rem;
+			font-size: 0.95rem;
+			font-weight: 700;
+		}
+
+		.side-nav ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.side-nav li { margin: 0.2rem 0; }
+
+		.side-nav a {
+			display: block;
+			padding: 0.25rem 0.45rem;
+			color: #222;
+			text-decoration: none;
+			border-radius: 3px;
+		}
+
+		.side-nav a:hover,
+		.side-nav a.active {
+			background: rgba(128,128,128,0.2);
+		}
+
+		/* --- tables --- */
+
+		table { width: 100%; }
+
+		/* --- image sizing --- */
+
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		@media (max-width: 900px) {
+			.layout {
+				flex-direction: column;
+				gap: 0;
+			}
+
+			.side-nav {
+				width: auto;
+				padding: 0.75rem 1rem;
+				border-bottom: 1px solid rgba(128,128,128,0.18);
+			}
+		}
+	</style>
+	<style type="text/css"> ol.lst-kix_63862e3ck92b-0.start{counter-reset:lst-ctn-kix_63862e3ck92b-0 0}ul.lst-kix_47kxu4qaugc-7{list-style-type:none}ul.lst-kix_47kxu4qaugc-8{list-style-type:none}.lst-kix_vhz8dfx8i74d-0 > li:before{content:"●  "}.lst-kix_vhz8dfx8i74d-1 > li:before{content:"○  "}.lst-kix_vhz8dfx8i74d-2 > li:before{content:"■  "}ul.lst-kix_vhz8dfx8i74d-2{list-style-type:none}ul.lst-kix_vhz8dfx8i74d-1{list-style-type:none}ul.lst-kix_vhz8dfx8i74d-4{list-style-type:none}ul.lst-kix_vhz8dfx8i74d-3{list-style-type:none}ul.lst-kix_vhz8dfx8i74d-6{list-style-type:none}ul.lst-kix_vhz8dfx8i74d-5{list-style-type:none}.lst-kix_vhz8dfx8i74d-3 > li:before{content:"●  "}ul.lst-kix_vhz8dfx8i74d-8{list-style-type:none}ul.lst-kix_vhz8dfx8i74d-7{list-style-type:none}.lst-kix_vhz8dfx8i74d-6 > li:before{content:"●  "}.lst-kix_vhz8dfx8i74d-4 > li:before{content:"○  "}.lst-kix_vhz8dfx8i74d-5 > li:before{content:"■  "}ul.lst-kix_5t0txco6tmz2-6{list-style-type:none}ul.lst-kix_5t0txco6tmz2-5{list-style-type:none}ul.lst-kix_5t0txco6tmz2-4{list-style-type:none}ul.lst-kix_5t0txco6tmz2-3{list-style-type:none}ul.lst-kix_5t0txco6tmz2-8{list-style-type:none}.lst-kix_vhz8dfx8i74d-7 > li:before{content:"○  "}ul.lst-kix_5t0txco6tmz2-7{list-style-type:none}ul.lst-kix_5t0txco6tmz2-2{list-style-type:none}.lst-kix_vhz8dfx8i74d-8 > li:before{content:"■  "}ul.lst-kix_5t0txco6tmz2-1{list-style-type:none}ul.lst-kix_vhz8dfx8i74d-0{list-style-type:none}.lst-kix_47kxu4qaugc-4 > li:before{content:"○  "}.lst-kix_fu7lsastwiga-3 > li:before{content:"●  "}.lst-kix_47kxu4qaugc-5 > li:before{content:"■  "}.lst-kix_clp6514l2b8-7 > li:before{content:"○  "}.lst-kix_47kxu4qaugc-7 > li:before{content:"○  "}.lst-kix_fu7lsastwiga-0 > li:before{content:"●  "}.lst-kix_fu7lsastwiga-4 > li:before{content:"○  "}.lst-kix_47kxu4qaugc-6 > li:before{content:"●  "}.lst-kix_clp6514l2b8-6 > li:before{content:"●  "}ol.lst-kix_5t0txco6tmz2-0.start{counter-reset:lst-ctn-kix_5t0txco6tmz2-0 0}.lst-kix_fu7lsastwiga-7 > li:before{content:"○  "}.lst-kix_fu7lsastwiga-5 > li:before{content:"■  "}.lst-kix_fu7lsastwiga-6 > li:before{content:"●  "}.lst-kix_47kxu4qaugc-8 > li:before{content:"■  "}.lst-kix_clp6514l2b8-0 > li:before{content:"●  "}.lst-kix_clp6514l2b8-8 > li:before{content:"■  "}.lst-kix_clp6514l2b8-1 > li:before{content:"○  "}.lst-kix_clp6514l2b8-2 > li:before{content:"■  "}.lst-kix_clp6514l2b8-3 > li:before{content:"●  "}.lst-kix_clp6514l2b8-5 > li:before{content:"■  "}ol.lst-kix_63862e3ck92b-0{list-style-type:none}.lst-kix_fu7lsastwiga-1 > li:before{content:"○  "}.lst-kix_fu7lsastwiga-2 > li:before{content:"■  "}.lst-kix_clp6514l2b8-4 > li:before{content:"○  "}ol.lst-kix_5t0txco6tmz2-0{list-style-type:none}ul.lst-kix_47kxu4qaugc-0{list-style-type:none}ul.lst-kix_47kxu4qaugc-1{list-style-type:none}ul.lst-kix_47kxu4qaugc-2{list-style-type:none}ul.lst-kix_47kxu4qaugc-3{list-style-type:none}ul.lst-kix_47kxu4qaugc-4{list-style-type:none}ul.lst-kix_47kxu4qaugc-5{list-style-type:none}ul.lst-kix_47kxu4qaugc-6{list-style-type:none}.lst-kix_xg5b538x4boo-2 > li:before{content:"■  "}.lst-kix_xg5b538x4boo-4 > li:before{content:"○  "}.lst-kix_xg5b538x4boo-3 > li:before{content:"●  "}.lst-kix_xg5b538x4boo-0 > li:before{content:"●  "}.lst-kix_xg5b538x4boo-8 > li:before{content:"■  "}.lst-kix_xg5b538x4boo-1 > li:before{content:"○  "}ul.lst-kix_xg5b538x4boo-4{list-style-type:none}ul.lst-kix_xg5b538x4boo-3{list-style-type:none}ul.lst-kix_xg5b538x4boo-2{list-style-type:none}ul.lst-kix_xg5b538x4boo-1{list-style-type:none}ul.lst-kix_xg5b538x4boo-8{list-style-type:none}ul.lst-kix_xg5b538x4boo-7{list-style-type:none}ul.lst-kix_xg5b538x4boo-6{list-style-type:none}ul.lst-kix_xg5b538x4boo-5{list-style-type:none}ul.lst-kix_xg5b538x4boo-0{list-style-type:none}.lst-kix_63862e3ck92b-5 > li:before{content:"■  "}.lst-kix_63862e3ck92b-3 > li:before{content:"●  "}.lst-kix_63862e3ck92b-7 > li:before{content:"○  "}.lst-kix_63862e3ck92b-2 > li:before{content:"■  "}.lst-kix_63862e3ck92b-6 > li:before{content:"●  "}.lst-kix_63862e3ck92b-1 > li:before{content:"○  "}.lst-kix_63862e3ck92b-0 > li:before{content:"" counter(lst-ctn-kix_63862e3ck92b-0,decimal) ". "}.lst-kix_63862e3ck92b-8 > li:before{content:"■  "}ul.lst-kix_63862e3ck92b-4{list-style-type:none}ul.lst-kix_63862e3ck92b-3{list-style-type:none}ul.lst-kix_63862e3ck92b-2{list-style-type:none}.lst-kix_fu7lsastwiga-8 > li:before{content:"■  "}ul.lst-kix_63862e3ck92b-1{list-style-type:none}.lst-kix_xg5b538x4boo-7 > li:before{content:"○  "}.lst-kix_xg5b538x4boo-6 > li:before{content:"●  "}.lst-kix_63862e3ck92b-4 > li:before{content:"○  "}.lst-kix_xg5b538x4boo-5 > li:before{content:"■  "}.lst-kix_ff8d0mw8v61s-7 > li:before{content:"○  "}.lst-kix_ff8d0mw8v61s-8 > li:before{content:"■  "}.lst-kix_47kxu4qaugc-3 > li:before{content:"●  "}.lst-kix_47kxu4qaugc-2 > li:before{content:"■  "}ul.lst-kix_63862e3ck92b-8{list-style-type:none}.lst-kix_47kxu4qaugc-1 > li:before{content:"○  "}.lst-kix_ff8d0mw8v61s-3 > li:before{content:"●  "}ul.lst-kix_63862e3ck92b-7{list-style-type:none}ul.lst-kix_63862e3ck92b-6{list-style-type:none}ul.lst-kix_fu7lsastwiga-1{list-style-type:none}ul.lst-kix_63862e3ck92b-5{list-style-type:none}ul.lst-kix_fu7lsastwiga-0{list-style-type:none}.lst-kix_ff8d0mw8v61s-1 > li:before{content:"○  "}.lst-kix_ff8d0mw8v61s-2 > li:before{content:"■  "}.lst-kix_47kxu4qaugc-0 > li:before{content:"●  "}.lst-kix_ff8d0mw8v61s-0 > li:before{content:"●  "}.lst-kix_5t0txco6tmz2-0 > li{counter-increment:lst-ctn-kix_5t0txco6tmz2-0}.lst-kix_5t0txco6tmz2-8 > li:before{content:"■  "}ul.lst-kix_clp6514l2b8-1{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-0{list-style-type:none}.lst-kix_5t0txco6tmz2-6 > li:before{content:"●  "}ul.lst-kix_clp6514l2b8-0{list-style-type:none}ul.lst-kix_clp6514l2b8-3{list-style-type:none}.lst-kix_5t0txco6tmz2-5 > li:before{content:"■  "}.lst-kix_5t0txco6tmz2-7 > li:before{content:"○  "}ul.lst-kix_clp6514l2b8-2{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-4{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-3{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-2{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-1{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-8{list-style-type:none}.lst-kix_5t0txco6tmz2-2 > li:before{content:"■  "}ul.lst-kix_fu7lsastwiga-7{list-style-type:none}ul.lst-kix_clp6514l2b8-8{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-7{list-style-type:none}ul.lst-kix_fu7lsastwiga-6{list-style-type:none}ul.lst-kix_ff8d0mw8v61s-6{list-style-type:none}.lst-kix_5t0txco6tmz2-1 > li:before{content:"○  "}.lst-kix_5t0txco6tmz2-3 > li:before{content:"●  "}ul.lst-kix_ff8d0mw8v61s-5{list-style-type:none}ul.lst-kix_fu7lsastwiga-8{list-style-type:none}ul.lst-kix_clp6514l2b8-5{list-style-type:none}.lst-kix_5t0txco6tmz2-0 > li:before{content:"" counter(lst-ctn-kix_5t0txco6tmz2-0,decimal) ". "}.lst-kix_5t0txco6tmz2-4 > li:before{content:"○  "}ul.lst-kix_fu7lsastwiga-3{list-style-type:none}ul.lst-kix_clp6514l2b8-4{list-style-type:none}ul.lst-kix_fu7lsastwiga-2{list-style-type:none}ul.lst-kix_clp6514l2b8-7{list-style-type:none}ul.lst-kix_fu7lsastwiga-5{list-style-type:none}ul.lst-kix_clp6514l2b8-6{list-style-type:none}.lst-kix_63862e3ck92b-0 > li{counter-increment:lst-ctn-kix_63862e3ck92b-0}ul.lst-kix_fu7lsastwiga-4{list-style-type:none}.lst-kix_ff8d0mw8v61s-4 > li:before{content:"○  "}.lst-kix_ff8d0mw8v61s-5 > li:before{content:"■  "}.lst-kix_ff8d0mw8v61s-6 > li:before{content:"●  "}</style>
+	<style>
+		.doc-content ul,
+		.doc-content ol {
+			padding-left: 1em !important;
+			margin: 0.35em 0 !important;
+		}
+
+		.doc-content li {
+			padding-left: 0 !important;
+			margin: 0.1em 0 !important;
+		}
+
+		.doc-content li::marker { font-size: 1em; }
+
+		.doc-content li > *:first-child { margin-left: 0.3em; }
+	</style>
+</head>
+<body style="background-color:#ffffff">
+
+<nav class="top-nav">
+<a class="nav-link" href="../index.html">home</a>
+<div class="nav-group active">
+  <a class="nav-link" href="../things.html">things</a>
+  <ul>
+    <li><a class="active" href="../things/strobepad.html">StrobePad</a></li>
+  </ul>
+</div>
+<div class="nav-group">
+  <a class="nav-link" href="../projects.html">projects</a>
+  <ul>
+    <li><a href="../projects/bee-lights.html">bee.lights</a></li>
+  </ul>
+</div>
+<a class="nav-link" href="../about.html">about</a>
+</nav>
+
+<div class="layout">
+	<aside class="side-nav">
+  <h2>StrobePad</h2>
+  <ul>
+    <li><a href="../things/strobepad/press-release.html">press release</a></li>
+    <li><a href="../things/strobepad/user-guide.html">user guide</a></li>
+    <li><a href="../things/strobepad/faq.html">faq</a></li>
+    <li><a href="../things/strobepad/datasheet.html">datasheet</a></li>
+  </ul>
+</aside>
+
+	<main class="main-area">
+		<div class="doc-content" style="max-width:538.6pt; padding:28.3pt 28.3pt 28.3pt 28.3pt">
+			<p class="title" style='padding:0;margin:0;color:#000000;font-weight:700;font-size:12pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left'><span style='color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>StrobePad</span></p><p class="subtitle" style='padding-top:0pt;margin:0;color:#666666;font-weight:700;padding-left:0;font-size:12pt;padding-bottom:3pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left;padding-right:0'><span style='color:#666666;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>Compact wireless strobe control, built for direct live use</span></p><p style='padding:0;margin:0;color:#000000;font-size:10pt;font-family:"Arial";line-height:1.15;orphans:2;widows:2;height:10pt;text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'></span></p><p style='padding:0;margin:0;color:#000000;font-size:10pt;font-family:"Arial";line-height:1.15;orphans:2;widows:2;text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>StrobePad is a compact handheld wireless strobe controller for direct control of a Stairville Power Strobe 1500 DMX via a compatible wireless DMX receiver. It is designed for fast setup, simple operation, and reliable performance in live and setup environments.</span></p><h1 style='padding-top:10pt;margin:0;color:#000000;font-weight:700;padding-left:0;font-size:12pt;padding-bottom:10pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left;padding-right:0'><span style='color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>Key Features</span></h1><ul class="lst-kix_47kxu4qaugc-0 start"><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>dedicated control of flash speed and power</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>momentary Fire trigger for precise live activation</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>output remains off until triggered</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>integrated display for active settings and device status</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>local on-device configuration</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>rechargeable battery operation with USB-C charging</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>user-replaceable 18650 battery</span></li></ul><h1 style='padding-top:10pt;margin:0;color:#000000;font-weight:700;padding-left:0;font-size:12pt;padding-bottom:10pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left;padding-right:0'><span style='color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>Designed for practical field use</span></h1><p style='padding:0;margin:0;color:#000000;font-size:10pt;font-family:"Arial";line-height:1.15;orphans:2;widows:2;text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>StrobePad gives users immediate hands-on control without complex menus or external setup tools. Important operating parameters remain visible during use, making the device suitable for quick deployment, fast troubleshooting, and focused single-task control.</span></p><h1 style='padding-top:10pt;margin:0;color:#000000;font-weight:700;padding-left:0;font-size:12pt;padding-bottom:10pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left;padding-right:0'><span style='color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>Typical Applications</span></h1><ul class="lst-kix_47kxu4qaugc-0"><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>live strobe triggering</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>portable effects control</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>fixture setup and testing</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>compact lighting control tasks</span></li></ul><h1 style='padding-top:10pt;margin:0;color:#000000;font-weight:700;padding-left:0;font-size:12pt;padding-bottom:10pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left;padding-right:0'><span style='color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>At a glance</span></h1><ul class="lst-kix_47kxu4qaugc-0"><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>2 dedicated rotary controls</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>1 momentary Fire button</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>wireless DMX transmission</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>integrated display</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>local configuration for DMX start address, wireless ID, and 2.4 GHz wireless channel</span></li><li style='padding:0; color:#000000; font-size:10pt; line-height:1.15; margin-right:0; font-family:"Arial"; margin-top:0; orphans:2; margin-bottom:0; widows:2; height:10pt; text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'></span></li></ul><h1 style='padding-top:10pt;margin:0;color:#000000;font-weight:700;padding-left:0;font-size:12pt;padding-bottom:10pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left;padding-right:0'><span style='color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>Compatibility</span></h1><p style='padding:0;margin:0;color:#000000;font-size:10pt;font-family:"Arial";line-height:1.15;orphans:2;widows:2;text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>StrobePad is intended for use with a Stairville Power Strobe 1500 DMX and a compatible wireless DMX receiver.</span></p><h1 style='padding-top:10pt;margin:0;color:#000000;font-weight:700;padding-left:0;font-size:12pt;padding-bottom:10pt;line-height:1.15;page-break-after:avoid;font-family:"Arial";orphans:2;widows:2;text-align:left;padding-right:0'><span style='color:#000000;font-weight:700;text-decoration:none;vertical-align:baseline;font-size:12pt;font-family:"Arial";font-style:normal'>Notice</span></h1><p style='padding:0;margin:0;color:#000000;font-size:10pt;font-family:"Arial";line-height:1.15;orphans:2;widows:2;text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'>Specifications and features may change without prior notice.</span></p><p style='padding:0;margin:0;color:#000000;font-size:10pt;font-family:"Arial";line-height:1.15;orphans:2;widows:2;height:10pt;text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'></span></p><p style='padding:0;margin:0;color:#000000;font-size:10pt;font-family:"Arial";line-height:1.15;orphans:2;widows:2;height:10pt;text-align:left'><span style='color:#000000;font-weight:400;text-decoration:none;vertical-align:baseline;font-size:10pt;font-family:"Arial";font-style:normal'></span></p>
+		</div>
+	</main>
+</div>
+
+</body>
+</html>
